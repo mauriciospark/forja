@@ -22,7 +22,7 @@ class ForjaEngine {
 
     async init() {
         try {
-            const response = await fetch('../data/knowledge-base.json');
+            const response = await fetch('data/knowledge-base.json');
             this.knowledgeBase = await response.json();
             this.setupEventListeners();
             this.renderCurrentSection();
