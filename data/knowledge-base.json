@@ -1,0 +1,392 @@
+{
+  "_watermark": {
+    "PROPRIETÁRIO": "Mauricio Spark",
+    "MARCA": "WINSOFT",
+    "PROJETO": "FORJA",
+    "VERSÃO": "1.0.0",
+    "LINHAGEM": "SPARK",
+    "COPYRIGHT": "© 2026 WINSOFT / Mauricio Spark. All rights reserved."
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "name": "FORJA Knowledge Base",
+    "description": "Base de conhecimento para geração de escopo técnico"
+  },
+  "sections": {
+    "fundacao": {
+      "id": "fundacao",
+      "title": "Fundação",
+      "description": "Base do projeto - tipo, objetivo e funcionalidades core",
+      "questions": [
+        {
+          "id": "projeto_nome",
+          "type": "text",
+          "question": "Qual é o nome do projeto?",
+          "required": true,
+          "triggers": []
+        },
+        {
+          "id": "projeto_tipo",
+          "type": "single_choice",
+          "question": "Qual tipo de projeto?",
+          "options": [
+            { "value": "site_institucional", "label": "Site Institucional", "triggers": [] },
+            { "value": "ecommerce", "label": "E-commerce", "triggers": ["lgpd_dados", "seguranca_pagamento"] },
+            { "value": "web_app", "label": "Web Application", "triggers": ["seguranca_autenticacao", "infra_escalabilidade"] },
+            { "value": "mobile_app", "label": "Aplicativo Mobile", "triggers": ["seguranca_autenticacao", "infra_backend"] },
+            { "value": "api", "label": "API/Backend", "triggers": ["seguranca_api", "infra_documentacao"] },
+            { "value": "saas", "label": "SaaS (Software as a Service)", "triggers": ["seguranca_autenticacao", "lgpd_completo", "infra_multi_tenant"] }
+          ],
+          "required": true
+        },
+        {
+          "id": "projeto_objetivo",
+          "type": "textarea",
+          "question": "Qual o objetivo principal do projeto?",
+          "placeholder": "Descreva o problema que o projeto resolve...",
+          "required": true
+        },
+        {
+          "id": "publico_alvo",
+          "type": "text",
+          "question": "Quem é o público-alvo?",
+          "required": true
+        },
+        {
+          "id": "funcionalidades_core",
+          "type": "multi_choice",
+          "question": "Funcionalidades principais (selecione todas que aplicam):",
+          "options": [
+            { "value": "cadastro_usuarios", "label": "Cadastro de Usuários", "triggers": ["seguranca_autenticacao", "lgpd_dados"] },
+            { "value": "login", "label": "Login/Autenticação", "triggers": ["seguranca_autenticacao", "seguranca_senha"] },
+            { "value": "pagamentos", "label": "Sistema de Pagamentos", "triggers": ["seguranca_pagamento", "lgpd_financeiro"] },
+            { "value": "upload_arquivos", "label": "Upload de Arquivos", "triggers": ["seguranca_upload", "infra_storage"] },
+            { "value": "chat_mensagens", "label": "Chat/Mensagens", "triggers": ["seguranca_websocket", "lgpd_comunicacao"] },
+            { "value": "notificacoes", "label": "Notificações (Email/Push)", "triggers": ["infra_fila", "seguranca_email"] },
+            { "value": "busca", "label": "Sistema de Busca", "triggers": ["infra_indexacao"] },
+            { "value": "dashboard", "label": "Dashboard/Relatórios", "triggers": ["seguranca_autorizacao"] },
+            { "value": "integracao_externa", "label": "Integração com APIs Externas", "triggers": ["seguranca_api_externa", "infra_dependencias"] },
+            { "value": "geolocalizacao", "label": "Geolocalização", "triggers": ["lgpd_localizacao"] }
+          ]
+        }
+      ]
+    },
+    "seguranca": {
+      "id": "seguranca",
+      "title": "Segurança",
+      "description": "Autenticação, criptografia e proteções",
+      "depends_on": ["seguranca_autenticacao", "seguranca_senha", "seguranca_pagamento", "seguranca_upload", "seguranca_api", "seguranca_websocket", "seguranca_email", "seguranca_api_externa", "seguranca_autorizacao"],
+      "questions": [
+        {
+          "id": "tipo_autenticacao",
+          "type": "single_choice",
+          "question": "Qual método de autenticação será utilizado?",
+          "options": [
+            { "value": "jwt", "label": "JWT (JSON Web Tokens)", "triggers": ["checklist_jwt"] },
+            { "value": "oauth2", "label": "OAuth 2.0 / OpenID Connect", "triggers": ["checklist_oauth"] },
+            { "value": "sessao", "label": "Sessões Server-Side", "triggers": ["checklist_sessao"] },
+            { "value": "mfa", "label": "Multi-Fator (MFA/2FA)", "triggers": ["checklist_mfa"] },
+            { "value": "api_key", "label": "API Keys", "triggers": ["checklist_api_key"] }
+          ],
+          "required": false
+        },
+        {
+          "id": "criptografia_dados",
+          "type": "multi_choice",
+          "question": "Quais dados serão criptografados?",
+          "options": [
+            { "value": "senhas_hash", "label": "Senhas (hash bcrypt/Argon2)" },
+            { "value": "dados_sensiveis", "label": "Dados sensíveis em repouso (AES-256)" },
+            { "value": "transmissao_tls", "label": "Transmissão (TLS 1.3)" },
+            { "value": "banco_criptografia", "label": "Criptografia no banco de dados" },
+            { "value": "backup_criptografado", "label": "Backups criptografados" }
+          ]
+        },
+        {
+          "id": "protecoes_seguranca",
+          "type": "multi_choice",
+          "question": "Proteções de segurança a implementar:",
+          "options": [
+            { "value": "sql_injection", "label": "Proteção SQL Injection (prepared statements)" },
+            { "value": "xss", "label": "Proteção XSS (sanitização de entrada)" },
+            { "value": "csrf", "label": "Proteção CSRF (tokens)" },
+            { "value": "rate_limiting", "label": "Rate Limiting (proteção DDoS)" },
+            { "value": "headers_seguranca", "label": "Headers de Segurança (HSTS, CSP, X-Frame)" },
+            { "value": "validacao_entrada", "label": "Validação rigorosa de entrada" },
+            { "value": "waf", "label": "Web Application Firewall (WAF)" },
+            { "value": "audit_logs", "label": "Logs de auditoria de segurança" }
+          ]
+        },
+        {
+          "id": "rotacao_segredos",
+          "type": "boolean",
+          "question": "Implementar rotação automática de segredos/keys?",
+          "triggers": ["checklist_rotacao_segredos"]
+        }
+      ],
+      "checklists": {
+        "checklist_jwt": [
+          "Usar algoritmo RS256 ou ES256 (nunca HS256 em produção)",
+          "Implementar refresh tokens com validade curta",
+          "Armazenar tokens em httpOnly cookies (nunca localStorage)",
+          "Implementar blacklist/logout de tokens",
+          "Validar issuer (iss) e audience (aud)",
+          "Definir expiração curta (15-30 minutos)"
+        ],
+        "checklist_oauth": [
+          "Validar redirect URIs estritamente",
+          "Usar PKCE para clients públicos",
+          "Implementar state parameter (CSRF protection)",
+          "Verificar escopos (scopes) apropriadamente",
+          "Armazenar client secrets com segurança",
+          "Implementar consentimento do usuário"
+        ],
+        "checklist_sessao": [
+          "IDs de sessão aleatórios e longos (128+ bits)",
+          "Regenerar ID após login",
+          "Implementar timeout de inatividade (30min)",
+          "Destruir sessão no servidor no logout",
+          "Usar cookies seguros (Secure, HttpOnly, SameSite)",
+          "Implementar detecção de hijacking"
+        ],
+        "checklist_mfa": [
+          "Suportar TOTP (Google Authenticator)",
+          "Oferecer backup codes",
+          "Implementar verificação SMS como fallback opcional",
+          "Lembrar dispositivos confiáveis (com cautela)",
+          "Requerer MFA para ações sensíveis"
+        ],
+        "checklist_api_key": [
+          "Prefixar keys para identificação",
+          "Implementar rate limiting por key",
+          "Permitir revogação imediata",
+          "Nunca expor keys no frontend",
+          "Usar diferentes keys para ambientes"
+        ]
+      }
+    },
+    "lgpd": {
+      "id": "lgpd",
+      "title": "LGPD - Conformidade Legal",
+      "description": "Conformidade com a Lei Geral de Proteção de Dados",
+      "depends_on": ["lgpd_dados", "lgpd_financeiro", "lgpd_comunicacao", "lgpd_localizacao", "lgpd_completo"],
+      "questions": [
+        {
+          "id": "dados_coletados",
+          "type": "multi_choice",
+          "question": "Quais dados pessoais serão coletados?",
+          "options": [
+            { "value": "nome", "label": "Nome completo" },
+            { "value": "email", "label": "E-mail" },
+            { "value": "telefone", "label": "Telefone" },
+            { "value": "cpf", "label": "CPF (dado sensível)" },
+            { "value": "endereco", "label": "Endereço completo" },
+            { "value": "data_nascimento", "label": "Data de nascimento" },
+            { "value": "foto", "label": "Foto/Imagem" },
+            { "value": "dados_bancarios", "label": "Dados bancários (sensível)" },
+            { "value": "localizacao", "label": "Localização geográfica" },
+            { "value": "comportamento", "label": "Dados de comportamento/navegação" },
+            { "value": "cookies", "label": "Cookies e identificadores" }
+          ]
+        },
+        {
+          "id": "base_legal",
+          "type": "single_choice",
+          "question": "Qual a base legal para processamento?",
+          "options": [
+            { "value": "consentimento", "label": "Consentimento do titular" },
+            { "value": "contrato", "label": "Execução de contrato" },
+            { "value": "obrigacao_legal", "label": "Obrigação legal" },
+            { "value": "interesse_legitimo", "label": "Interesse legítimo" },
+            { "value": "protecao_vida", "label": "Proteção da vida" }
+          ]
+        },
+        {
+          "id": "dpo_nomeado",
+          "type": "boolean",
+          "question": "Há um Data Protection Officer (DPO) nomeado?"
+        },
+        {
+          "id": "retencao_dados",
+          "type": "single_choice",
+          "question": "Política de retenção de dados:",
+          "options": [
+            { "value": "definida", "label": "Período definido e documentado" },
+            { "value": "analise_periodica", "label": "Análise periódica de necessidade" },
+            { "value": "indefinida", "label": "Indefinida (precisa ajustar!)" }
+          ]
+        },
+        {
+          "id": "direitos_titular",
+          "type": "multi_choice",
+          "question": "Mecanismos para exercício de direitos do titular:",
+          "options": [
+            { "value": "confirmacao", "label": "Confirmação de tratamento" },
+            { "value": "acesso", "label": "Acesso aos dados" },
+            { "value": "correcao", "label": "Correção de dados" },
+            { "value": "anonimizacao", "label": "Anonimização/bloqueio" },
+            { "value": "portabilidade", "label": "Portabilidade" },
+            { "value": "eliminacao", "label": "Eliminação (direito ao esquecimento)" },
+            { "value": "revogacao", "label": "Revogação de consentimento" }
+          ]
+        }
+      ],
+      "checklists": {
+        "lgpd_basico": [
+          "Publicar política de privacidade clara e acessível",
+          "Implementar termo de consentimento específico",
+          "Criar canal para exercício de direitos do titular",
+          "Documentar operações de tratamento (RIPD)",
+          "Implementar segurança técnica adequada",
+          "Treinar equipe sobre LGPD"
+        ],
+        "lgpd_avancado": [
+          "Realizar DPIA (Avaliação de Impacto à Proteção de Dados)",
+          "Implementar Privacy by Design",
+          "Criar procedimento para brechas de segurança",
+          "Manter registro de consentimentos",
+          "Implementar anonimização técnica",
+          "Garantir portabilidade em formato aberto",
+          "Nomear DPO se aplicável",
+          "Contratos com operadores (terceiros)"
+        ]
+      }
+    },
+    "infraestrutura": {
+      "id": "infraestrutura",
+      "title": "Hospedagem e Infraestrutura",
+      "description": "Deploy, CI/CD, monitoramento e escalabilidade",
+      "depends_on": ["infra_escalabilidade", "infra_backend", "infra_documentacao", "infra_multi_tenant", "infra_fila", "infra_indexacao", "infra_storage", "infra_dependencias"],
+      "questions": [
+        {
+          "id": "plataforma_hospedagem",
+          "type": "single_choice",
+          "question": "Qual plataforma de hospedagem?",
+          "options": [
+            { "value": "aws", "label": "AWS (Amazon Web Services)", "triggers": ["checklist_aws"] },
+            { "value": "gcp", "label": "Google Cloud Platform", "triggers": ["checklist_gcp"] },
+            { "value": "azure", "label": "Microsoft Azure", "triggers": ["checklist_azure"] },
+            { "value": "vercel", "label": "Vercel", "triggers": ["checklist_vercel"] },
+            { "value": "netlify", "label": "Netlify", "triggers": ["checklist_netlify"] },
+            { "value": "heroku", "label": "Heroku", "triggers": ["checklist_heroku"] },
+            { "value": "digitalocean", "label": "DigitalOcean", "triggers": ["checklist_do"] },
+            { "value": "on_premise", "label": "On-premise/Próprio", "triggers": ["checklist_onpremise"] },
+            { "value": "multi_cloud", "label": "Multi-cloud/Híbrido", "triggers": ["checklist_multicloud"] }
+          ],
+          "required": true
+        },
+        {
+          "id": "estrategia_deploy",
+          "type": "multi_choice",
+          "question": "Estratégia de deploy:",
+          "options": [
+            { "value": "ci_cd", "label": "CI/CD Automatizado" },
+            { "value": "docker", "label": "Docker Containers" },
+            { "value": "kubernetes", "label": "Kubernetes (K8s)" },
+            { "value": "serverless", "label": "Serverless/Functions" },
+            { "value": "blue_green", "label": "Blue-Green Deployment" },
+            { "value": "canary", "label": "Canary Releases" },
+            { "value": "feature_flags", "label": "Feature Flags" }
+          ]
+        },
+        {
+          "id": "banco_dados",
+          "type": "multi_choice",
+          "question": "Banco de dados:",
+          "options": [
+            { "value": "postgres", "label": "PostgreSQL" },
+            { "value": "mysql", "label": "MySQL/MariaDB" },
+            { "value": "mongodb", "label": "MongoDB" },
+            { "value": "redis", "label": "Redis (cache)" },
+            { "value": "dynamodb", "label": "DynamoDB" },
+            { "value": "firebase", "label": "Firebase" },
+            { "value": "sqlite", "label": "SQLite (dev/teste)" },
+            { "value": "elasticsearch", "label": "Elasticsearch" }
+          ]
+        },
+        {
+          "id": "monitoramento",
+          "type": "multi_choice",
+          "question": "Ferramentas de monitoramento:",
+          "options": [
+            { "value": "logs_centralizados", "label": "Logs centralizados" },
+            { "value": "apm", "label": "APM (Performance Monitoring)" },
+            { "value": "alertas", "label": "Sistema de alertas" },
+            { "value": "health_checks", "label": "Health checks" },
+            { "value": "dashboard_monitoramento", "label": "Dashboard de métricas" },
+            { "value": "rastreamento_erros", "label": "Rastreamento de erros (Sentry)" }
+          ]
+        },
+        {
+          "id": "ambientes",
+          "type": "multi_choice",
+          "question": "Ambientes configurados:",
+          "options": [
+            { "value": "dev", "label": "Desenvolvimento" },
+            { "value": "staging", "label": "Staging/Homologação" },
+            { "value": "producao", "label": "Produção" },
+            { "value": "dr", "label": "Disaster Recovery" }
+          ]
+        },
+        {
+          "id": "backup_recuperacao",
+          "type": "multi_choice",
+          "question": "Estratégia de backup e recuperação:",
+          "options": [
+            { "value": "backup_automatico", "label": "Backups automáticos" },
+            { "value": "backup_criptografado", "label": "Backups criptografados" },
+            { "value": "teste_restore", "label": "Testes periódicos de restore" },
+            { "value": "ponto_recuperacao", "label": "RPO definido" },
+            { "value": "tempo_recuperacao", "label": "RTO definido" },
+            { "value": "geograficamente_distribuido", "label": "Backup em múltiplas regiões" }
+          ]
+        }
+      ],
+      "checklists": {
+        "checklist_aws": [
+          "Configurar IAM com princípio do menor privilégio",
+          "Habilitar MFA para acesso root",
+          "Usar Secrets Manager para credenciais",
+          "Configurar VPC com subnets privadas",
+          "Habilitar CloudTrail para auditoria",
+          "Configurar AWS WAF",
+          "Usar CloudFront CDN",
+          "Configurar Auto Scaling",
+          "Habilitar CloudWatch alarms"
+        ],
+        "checklist_vercel": [
+          "Configurar domínio customizado com HTTPS",
+          "Configurar variáveis de ambiente",
+          "Habilitar Proteção de Deploy",
+          "Configurar Preview Deployments",
+          "Configurar Edge Functions se necessário",
+          "Otimizar images com Next.js Image"
+        ],
+        "checklist_docker": [
+          "Usar imagens oficiais e minimalistas",
+          "Não rodar como root",
+          "Multi-stage builds",
+          "Scan de vulnerabilidades",
+          "Health checks em containers",
+          "Limitar recursos (CPU/memória)"
+        ],
+        "checklist_cicd": [
+          "Testes automatizados no pipeline",
+          "Linting e formatação",
+          "Security scanning (SAST/DAST)",
+          "Revisão obrigatória de código",
+          "Deploy automatizado após merge",
+          "Rollback automatizado em falha",
+          "Notificações de status"
+        ]
+      }
+    }
+  },
+  "output_templates": {
+    "readme_header": "# {nome_projeto}\n\n> Escopo técnico gerado pelo FORJA\n\n## Objetivo\n{objetivo}\n\n---\n",
+    "section_fundacao": "## Fundação\n\n**Tipo:** {tipo_projeto}\n**Público-alvo:** {publico}\n\n### Funcionalidades Core\n{funcionalidades}\n",
+    "section_seguranca": "## Segurança\n\n### Autenticação\n{autenticacao}\n\n### Criptografia\n{criptografia}\n\n### Proteções Implementadas\n{protecoes}\n\n### Checklists\n{checklists_seguranca}\n",
+    "section_lgpd": "## LGPD - Conformidade\n\n### Dados Coletados\n{dados_coletados}\n\n### Base Legal\n{base_legal}\n\n### Mecanismos de Direitos do Titular\n{direitos}\n\n### Checklist de Conformidade\n{checklist_lgpd}\n",
+    "section_infra": "## Infraestrutura\n\n### Plataforma\n{plataforma}\n\n### Banco de Dados\n{banco}\n\n### Estratégia de Deploy\n{deploy}\n\n### Monitoramento\n{monitoramento}\n\n### Checklists\n{checklists_infra}\n"
+  }
+}

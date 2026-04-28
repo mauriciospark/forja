@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<!--
+  ============================================================================
+  PROPRIETÁRIO: Mauricio Spark
+  MARCA: WINSOFT
+  PROJETO: FORJA
+  VERSÃO: 1.0.0
+  LINHAGEM: SPARK
+  ============================================================================
+  Documento de Planejamento de Escopo
+  COPYRIGHT: © 2026 WINSOFT / Mauricio Spark. All rights reserved.
+  ============================================================================
+-->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FORJA </title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="57x57" href="../favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="../favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="../favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="../favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="../favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="../favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="../favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="../favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="../favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="../favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon/favicon-16x16.png">
+    <link rel="manifest" href="../favicon/manifest.json">
+    <link rel="shortcut icon" href="../favicon/favicon.ico" type="image/x-icon">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="../favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo">
+                <img src="../favicon/forja.jpeg" alt="">
+                <h1>FORJA</h1>
+            </div>
+            <p class="tagline">Transformando ideias em projetos robustos e temperados</p>
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+                <span class="progress-text" id="progressText">0%</span>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="app-main">
+            <!-- Navigation Sidebar -->
+            <nav class="nav-sidebar" id="navSidebar">
+                <div class="nav-section active" data-section="fundacao">
+                    <span class="nav-icon"><img src="../favicon/forja.jpeg" alt="Fundação"></span>
+                    <span class="nav-label">Fundação</span>
+                    <span class="nav-status" id="status-fundacao">○</span>
+                </div>
+                <div class="nav-section disabled" data-section="seguranca" id="nav-seguranca">
+                    <span class="nav-icon"><img src="../favicon/forja.jpeg" alt="Segurança"></span>
+                    <span class="nav-label">Segurança</span>
+                    <span class="nav-status" id="status-seguranca">○</span>
+                </div>
+                <div class="nav-section disabled" data-section="lgpd" id="nav-lgpd">
+                    <span class="nav-icon"><img src="../favicon/forja.jpeg" alt="LGPD"></span>
+                    <span class="nav-label">LGPD</span>
+                    <span class="nav-status" id="status-lgpd">○</span>
+                </div>
+                <div class="nav-section disabled" data-section="infraestrutura" id="nav-infraestrutura">
+                    <span class="nav-icon"><img src="../favicon/forja.jpeg" alt="Infraestrutura"></span>
+                    <span class="nav-label">Infraestrutura</span>
+                    <span class="nav-status" id="status-infraestrutura">○</span>
+                </div>
+                <div class="nav-section disabled" data-section="resultado" id="nav-resultado">
+                    <span class="nav-icon"><img src="../favicon/forja.jpeg" alt="Resultado"></span>
+                    <span class="nav-label">Resultado</span>
+                    <span class="nav-status" id="status-resultado">○</span>
+                </div>
+            </nav>
+
+            <!-- Question Container -->
+            <div class="content-area">
+                <div class="section-header">
+                    <h2 id="sectionTitle">Fundação</h2>
+                    <p id="sectionDescription">Base do projeto - tipo, objetivo e funcionalidades core</p>
+                </div>
+
+                <div class="questions-container" id="questionsContainer">
+                    <!-- Questions will be injected here by JS -->
+                </div>
+
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary" id="prevBtn" disabled>Anterior</button>
+                    <button class="btn btn-primary" id="nextBtn">Próximo</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Result Modal -->
+        <div class="modal" id="resultModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Escopo Técnico Gerado</h2>
+                    <button class="modal-close" id="modalClose">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="output-tabs">
+                        <button class="tab-btn active" data-tab="preview">Visualização</button>
+                        <button class="tab-btn" data-tab="markdown">Markdown</button>
+                    </div>
+                    <div class="output-content">
+                        <div class="tab-pane active" id="previewPane">
+                            <div class="preview-content" id="previewContent"></div>
+                        </div>
+                        <div class="tab-pane" id="markdownPane">
+                            <textarea class="markdown-output" id="markdownOutput" readonly></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-actions">
+                        <button class="btn btn-secondary" id="copyBtn">📋 Copiar Markdown</button>
+                        <button class="btn btn-primary" id="downloadBtn">💾 Download README.md</button>
+                        <button class="btn btn-success" id="restartBtn">🔄 Novo Projeto</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/script.js"></script>
+</body>
+
+</html>
