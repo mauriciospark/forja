@@ -680,7 +680,10 @@ class ForjaEngine {
         steps += '- [ ] Deploy para staging\n';
         steps += '- [ ] Testes de aceitação\n';
         steps += '- [ ] Deploy para produção\n';
-        
+
+        steps += '\n---\n\n';
+        steps += '> Escopo gerado por [FORJA](https://mauriciospark.github.io/forja/) - Forjando projetos robustos 🔥\n';
+        steps += '> O criador Mauricio Spark perfil [Mauricio Spark](https://github.com/mauriciospark) - Forjando projetos robustos 🔥\n';
         
         
         return steps;
